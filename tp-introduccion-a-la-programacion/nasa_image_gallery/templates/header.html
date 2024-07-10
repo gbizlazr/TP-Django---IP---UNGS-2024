@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto de Introducción a la Programación | Primer Semestre UNGS - 2024</title>
+    {% load bootstrap5 %} 
+    {% bootstrap_css %} 
+    {% bootstrap_javascript %} 
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="icon" href="https://imgs.search.brave.com/44_et0xJ_8w4TPMUYjVue3ycGJpn6R4FuUxXnh_7bTw/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNDEzYmM2MTUx/OTBjMjBjYjZlNzdm/ODdmMjYwYzE3NThi/NzRmMGY3YWJiZmRl/NGQyNjQ4Y2FjNjUw/NThiNmZlMi93d3cu/dW5ncy5lZHUuYXIv">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <img src="../static/NASA_Worm_logo.svg_-580x160.png" alt="" style="height: 30px;" />
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <img src="https://i.ibb.co/gw8bDFZ/image.png" alt="" border="0" style="width: 30px; height: 30px;" />
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto ms-0 ms-lg-3">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/' %}active{% endif %}" aria-current="page" href="{% url 'index-page' %}">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/home/' %}active{% endif %}" aria-current="page" href="{% url 'home' %}">Galería</a>
+                </li>
+                {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/favourites/' %}active{% endif %}" href="{% url 'favoritos' %}">Favoritos</a>
+                </li>
+                {% endif %}
+            </ul>
+            <div class="d-flex">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    {% if request.user.is_authenticated %}
+                        <li>
+                            <a class="nav-link" href="{% url 'logout' %}">Salir</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a class="nav-link me-1 {% if request.path == '/login/' %}active{% endif %}" href="{% url 'login' %}">Iniciar sesión</a>
+                        </li>
+                        <li>
+                            <a class="btn {% if request.path == '/signup' %} btn-light {% else %} btn-outline-light {% endif %}" href="{% url 'signup' %}">Crear usuario</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+        </div>
+    </nav>
+
+    {% block content %} {% endblock %} {% include "footer.html" %}
+</body>
+</html>
